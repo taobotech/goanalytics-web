@@ -70,24 +70,22 @@ export default {
         }]
       }
       getCounter(descriptorData).then(response => {
-        console.log(response)
         const data = response.data[this.counterName]
         this.xAxisData = []
         this.yAxisData = {}
         this.yAxisData[this.displayName] = []
         for (let timestamp = this.start / 1000; timestamp <= this.end / 1000; timestamp += 24 * 3600) {
-          this.xAxisData.push(dateUtils.timeStampToString(timestamp))
+          const dateStr = dateUtils.timeStampToString(timestamp)
+          this.xAxisData.push(dateStr)
           let count = 0
-          if (data !== undefined && data[timestamp] !== undefined) {
-            count = data[timestamp]
+          if (data !== undefined && data[dateStr] !== undefined) {
+            count = data[dateStr]
           }
           if (this.percent) {
             count *= 100
           }
           this.yAxisData[this.displayName].push(count.toFixed(1))
         }
-        console.log(this.xAxisData)
-        console.log(this.yAxisData)
       })
     }
   }
